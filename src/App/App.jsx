@@ -201,7 +201,7 @@ function App() {
                 </Form.Group>
 
                 <div className="button-row">
-                  <Button variant="secondary" type="submit">
+                  <Button variant="secondary" type="submit" onClick={sendNo}>
                     We're In!
                   </Button>
                   <Button variant="danger">Can't Make It :(</Button>
