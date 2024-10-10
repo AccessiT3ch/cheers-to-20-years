@@ -19,13 +19,13 @@ function App() {
     e.preventDefault();
     console.log("RSVP Yes");
 
-    const emailBody = partyName + ' is/are coming to the party!\n\n' +
-      'Party Name: ' + partyName + '\n' +
-      'Email: ' + email + '\n' +
-      'Number of Adults: ' + numAdults + '\n' +
-      'Number of Children: ' + numChildren + '\n' +
-      'Dietary Restrictions: ' + dietaryRestrictions + '\n'
-      'Message: ' + message + '\n';
+    const emailBody = `Hello! ${partyName} is/are coming to the party!\n\n
+    Party Name: ${partyName}\n
+    Email: ${email}\n
+    Number of Adults: ${numAdults}\n
+    Number of Children: ${numChildren}\n
+    Dietary Restrictions: ${dietaryRestrictions}\n
+    Message: ${message}\n`;
 
     // open mailto link in new tab
     window.open(`mailto:ckellydesign.net@gmail.com,shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
@@ -35,10 +35,10 @@ function App() {
     e.preventDefault();
     console.log("RSVP No");
 
-    const emailBody = partyName + ' can\'t make it to the party.\n\n' +
-      'Party Name: ' + partyName + '\n' +
-      'Email: ' + email + '\n' +
-      'Message: ' + message + '\n';
+    const emailBody = `Hello! ${partyName} can't make it to the party. :( \n\n
+    Party Name: ${partyName}\n
+    Email: ${email}\n
+    Message: ${message}\n`;
 
     // open mailto link in new tab
     window.open(`mailto:ckellydesign.net@gmail.com,shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
@@ -144,7 +144,7 @@ function App() {
           ) : (
             <>
               <p>Let us know you're coming!</p>
-              <Form onSubmit={sendYes}>
+              <Form>
                 {/* party name*, email*, number of adults, number of children, dietary restrictions */}
                 <Form.Group controlId="partyName">
                   <Form.Label>Party Name</Form.Label>
@@ -201,10 +201,10 @@ function App() {
                 </Form.Group>
 
                 <div className="button-row">
-                  <Button variant="secondary" type="submit" onClick={sendNo}>
+                  <Button variant="secondary" onClick={sendYes}>
                     We're In!
                   </Button>
-                  <Button variant="danger">Can't Make It :(</Button>
+                  <Button variant="danger" onClick={sendNo}>Can't Make It :(</Button>
                 </div>
               </Form>
             </>
