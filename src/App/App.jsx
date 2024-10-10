@@ -8,15 +8,45 @@ function App() {
   const [authorized, setAuthorized] = useState(false);
   const isAuthorized = (p) => p === 'sheelz&con4eva';
 
+  const [partyName, setPartyName] = useState("");
+  const [email, setEmail] = useState("");
+  const [numAdults, setNumAdults] = useState(0);
+  const [numChildren, setNumChildren] = useState(0);
+  const [dietaryRestrictions, setDietaryRestrictions] = useState("");
+
+  const sendYes = (e) => {
+    e.preventDefault();
+    console.log("RSVP Yes");
+
+    const emailBody = `
+      ${partyName} is/are coming to the party!
+
+      Party Name: ${partyName}
+      Email: ${email}
+      Number of Adults: ${numAdults}
+      Number of Children: ${numChildren}
+      Dietary Restrictions: ${dietaryRestrictions}
+    `
+    // open mailto link in new tab
+    window.open(`mailto:ckellydesign.net@gmail.com?subject=RSVP&body=${emailBody}`);
+  }
+
   useEffect(() => {
     if (isAuthorized(pw)) {
       setAuthorized(true);
+      localStorage.setItem("authorized", true);
     }
   }, [pw]);
 
+  useEffect(() => {
+    const auth = localStorage.getItem("authorized");
+    if (auth) {
+      setAuthorized(true);
+    }
+  }, []);
+
   return (
     <Container>
-
       {/* Header Section */}
       <Row className="section">
         <Col xs={12}>
@@ -85,61 +115,77 @@ function App() {
       <Row className="section">
         <Col xs={12} md={{ span: 6, offset: 3 }}>
           <h2>RSVP</h2>
-          {!authorized ? (<>
-            <p>Enter the password to RSVP</p>
-            <Form>
-              <Form.Group controlId="password">
-                <Form.Control
-                  type="text"
-                  placeholder="Password"
-                  onChange={(e) => setPw(e.target.value)}
-                />
-              </Form.Group>
-            </Form>
-          </>) : (<>
-            <p>Let us know you're coming!</p>
-            <Form>
-              {/* party name*, email*, number of adults, number of children, dietary restrictions */}
-              <Form.Group controlId="partyName">
-                <Form.Label>Party Name</Form.Label>
-                <Form.Control type="text" placeholder="Who dis?" />
-              </Form.Group>
+          {!authorized ? (
+            <>
+              <p>Enter the password to RSVP</p>
+              <Form>
+                <Form.Group controlId="password">
+                  <Form.Control
+                    type="text"
+                    placeholder="Password"
+                    onChange={(e) => setPw(e.target.value)}
+                  />
+                </Form.Group>
+              </Form>
+            </>
+          ) : (
+            <>
+              <p>Let us know you're coming!</p>
+              <Form onSubmit={sendYes}>
+                {/* party name*, email*, number of adults, number of children, dietary restrictions */}
+                <Form.Group controlId="partyName">
+                  <Form.Label>Party Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Who dis?"
+                    onChange={(e) => setPartyName(e.target.value)}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="email">
-                <Form.Label>Email</Form.Label>
-                <Form.Control type="email" placeholder="rsvp@right.now" />
-              </Form.Group>
+                <Form.Group controlId="email">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="rsvp@right.now"
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="numAdults">
-                <Form.Label>Number of Adults</Form.Label>
-                <Form.Control type="number" placeholder="Adults" />
-              </Form.Group>
+                <Form.Group controlId="numAdults">
+                  <Form.Label>Number of Adults</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Adults"
+                    onChange={(e) => setNumAdults(e.target.value)}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="numChildren">
-                <Form.Label>Number of Children</Form.Label>
-                <Form.Control
-                  type="number"
-                  placeholder="Children"
-                />
-              </Form.Group>
+                <Form.Group controlId="numChildren">
+                  <Form.Label>Number of Children</Form.Label>
+                  <Form.Control
+                    type="number"
+                    placeholder="Children"
+                    onChange={(e) => setNumChildren(e.target.value)}
+                  />
+                </Form.Group>
 
-              <Form.Group controlId="dietaryRestrictions">
-                <Form.Label>Dietary Restrictions</Form.Label>
-                <Form.Control
-                  as="textarea"
-                  placeholder="Soy, Gluten, Dairy, Nightshades, etc." />
-              </Form.Group>
-              <div className="button-row">
-                <Button variant="secondary" type="submit">
-                  We're In!
-                </Button>
-                <Button variant="danger">
-                  Can't Make It :(
-                </Button>
-              </div>
-            </Form>
-          </>)}
-
+                <Form.Group controlId="dietaryRestrictions">
+                  <Form.Label>Dietary Restrictions</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Soy, Gluten, Dairy, Nightshades, etc."
+                    onChange={(e) => setDietaryRestrictions(e.target.value)}
+                  />
+                </Form.Group>
+                <div className="button-row">
+                  <Button variant="secondary" type="submit">
+                    We're In!
+                  </Button>
+                  <Button variant="danger">Can't Make It :(</Button>
+                </div>
+              </Form>
+            </>
+          )}
         </Col>
       </Row>
 
