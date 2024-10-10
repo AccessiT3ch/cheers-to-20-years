@@ -13,6 +13,7 @@ function App() {
   const [numAdults, setNumAdults] = useState(0);
   const [numChildren, setNumChildren] = useState(0);
   const [dietaryRestrictions, setDietaryRestrictions] = useState("");
+  const [message, setMessage] = useState("");
 
   const sendYes = (e) => {
     e.preventDefault();
@@ -23,7 +24,8 @@ function App() {
       'Email: ' + email + '\n' +
       'Number of Adults: ' + numAdults + '\n' +
       'Number of Children: ' + numChildren + '\n' +
-      'Dietary Restrictions: ' + dietaryRestrictions + '\n';
+      'Dietary Restrictions: ' + dietaryRestrictions + '\n'
+      'Message: ' + message + '\n';
 
     // open mailto link in new tab
     window.open(`mailto:ckellydesign.net@gmail.com, shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
@@ -175,6 +177,16 @@ function App() {
                     onChange={(e) => setDietaryRestrictions(e.target.value)}
                   />
                 </Form.Group>
+
+                <Form.Group controlId="message">
+                  <Form.Label>Message</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Anything else you'd like to share?"
+                    onChange={(e) => setDietaryRestrictions(e.target.value)}
+                  />
+                </Form.Group>
+
                 <div className="button-row">
                   <Button variant="secondary" type="submit">
                     We're In!
