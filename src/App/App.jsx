@@ -28,7 +28,20 @@ function App() {
       'Message: ' + message + '\n';
 
     // open mailto link in new tab
-    window.open(`mailto:ckellydesign.net@gmail.com, shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
+    window.open(`mailto:ckellydesign.net@gmail.com,shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
+  }
+
+  const sendNo = (e) => {
+    e.preventDefault();
+    console.log("RSVP No");
+
+    const emailBody = partyName + ' can\'t make it to the party.\n\n' +
+      'Party Name: ' + partyName + '\n' +
+      'Email: ' + email + '\n' +
+      'Message: ' + message + '\n';
+
+    // open mailto link in new tab
+    window.open(`mailto:ckellydesign.net@gmail.com,shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
   }
 
   useEffect(() => {
