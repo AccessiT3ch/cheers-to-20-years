@@ -1,12 +1,23 @@
-import "./App.scss";
+import { useEffect, useState } from "react";
 import { Accordion, Button, Col, Container, Form, Row } from "react-bootstrap";
-
-import store from "../store/store";
+import "./App.scss";
 
 function App() {
 
+  const [pw, setPw] = useState("");
+  const [authorized, setAuthorized] = useState(false);
+  const isAuthorized = (p) => p === 'sheelz&con4eva';
+
+  useEffect(() => {
+    if (isAuthorized(pw)) {
+      setAuthorized(true);
+    }
+  }, [pw]);
+
   return (
     <Container>
+
+      {/* Header Section */}
       <Row className="section">
         <Col xs={12}>
           <header>
@@ -31,6 +42,8 @@ function App() {
           </p>
         </Col>
       </Row>
+
+      {/* Details Section */}
       <Row className="section">
         <Col xs={12} md={{ span: 4, offset: 2 }}>
           <h2 className="details-header">When</h2>
@@ -68,51 +81,65 @@ function App() {
         </Col>
       </Row>
 
+      {/* RSVP Section */}
       <Row className="section">
         <Col xs={12} md={{ span: 6, offset: 3 }}>
           <h2>RSVP</h2>
-          <p>Let us know you're coming!</p>
+          {!authorized ? (<>
+            <p>Enter the password to RSVP</p>
+            <Form>
+              <Form.Group controlId="password">
+                <Form.Control
+                  type="text"
+                  placeholder="Password"
+                  onChange={(e) => setPw(e.target.value)}
+                />
+              </Form.Group>
+            </Form>
+          </>) : (<>
+            <p>Let us know you're coming!</p>
+            <Form>
+              {/* party name*, email*, number of adults, number of children, dietary restrictions */}
+              <Form.Group controlId="partyName">
+                <Form.Label>Party Name</Form.Label>
+                <Form.Control type="text" placeholder="Who dis?" />
+              </Form.Group>
 
-          <Form>
-            {/* party name*, email*, number of adults, number of children, dietary restrictions */}
-            <Form.Group controlId="partyName">
-              <Form.Label>Party Name</Form.Label>
-              <Form.Control type="text" placeholder="Who dis?" />
-            </Form.Group>
+              <Form.Group controlId="email">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder="rsvp@right.now" />
+              </Form.Group>
 
-            <Form.Group controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="rsvp@right.now" />
-            </Form.Group>
+              <Form.Group controlId="numAdults">
+                <Form.Label>Number of Adults</Form.Label>
+                <Form.Control type="number" placeholder="Adults" />
+              </Form.Group>
 
-            <Form.Group controlId="numAdults">
-              <Form.Label>Number of Adults</Form.Label>
-              <Form.Control type="number" placeholder="Adults" />
-            </Form.Group>
+              <Form.Group controlId="numChildren">
+                <Form.Label>Number of Children</Form.Label>
+                <Form.Control
+                  type="number"
+                  placeholder="Children"
+                />
+              </Form.Group>
 
-            <Form.Group controlId="numChildren">
-              <Form.Label>Number of Children</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Children"
-              />
-            </Form.Group>
+              <Form.Group controlId="dietaryRestrictions">
+                <Form.Label>Dietary Restrictions</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  placeholder="Soy, Gluten, Dairy, Nightshades, etc." />
+              </Form.Group>
+              <div className="button-row">
+                <Button variant="secondary" type="submit">
+                  We're In!
+                </Button>
+                <Button variant="danger">
+                  Can't Make It :(
+                </Button>
+              </div>
+            </Form>
+          </>)}
 
-            <Form.Group controlId="dietaryRestrictions">
-              <Form.Label>Dietary Restrictions</Form.Label>
-              <Form.Control
-                as="textarea"
-                placeholder="Soy, Gluten, Dairy, Nightshades, etc." />
-            </Form.Group>
-            <div className="button-row">
-              <Button variant="secondary" type="submit">
-                We're In!
-              </Button>
-              <Button variant="danger">
-                Can't Make It :(
-              </Button>
-            </div>
-          </Form>
         </Col>
       </Row>
 
