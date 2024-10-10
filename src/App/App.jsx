@@ -18,17 +18,15 @@ function App() {
     e.preventDefault();
     console.log("RSVP Yes");
 
-    const emailBody = `
-      ${partyName} is/are coming to the party!
+    const emailBody = partyName + ' is/are coming to the party!\n\n' +
+      'Party Name: ' + partyName + '\n' +
+      'Email: ' + email + '\n' +
+      'Number of Adults: ' + numAdults + '\n' +
+      'Number of Children: ' + numChildren + '\n' +
+      'Dietary Restrictions: ' + dietaryRestrictions + '\n';
 
-      Party Name: ${partyName}
-      Email: ${email}
-      Number of Adults: ${numAdults}
-      Number of Children: ${numChildren}
-      Dietary Restrictions: ${dietaryRestrictions}
-    `
     // open mailto link in new tab
-    window.open(`mailto:ckellydesign.net@gmail.com?subject=RSVP&body=${emailBody}`);
+    window.open(`mailto:ckellydesign.net@gmail.com, shbowler@gmail.com?subject=RSVP&body=${emailBody}`);
   }
 
   useEffect(() => {
